@@ -1,0 +1,29 @@
+{
+  "name": "demo_credit",
+  "version": "1.0.0",
+  "description": "A mobile lending app with wallet functionality",
+  "main": "index.js",
+  "author": "Victor Nwagu",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "compile": "tsc --watch",
+    "start:dev": "nodemon ./dist/index.js",
+    "start:prod": "node ./dist/index.js"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.2",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jest": "^29.7.0",
+    "knex": "^3.1.0",
+    "mysql": "^2.18.1"
+  }
+}
