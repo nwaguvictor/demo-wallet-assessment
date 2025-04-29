@@ -1,5 +1,8 @@
+import { db } from '../config';
+
 export class AuthService {
   async register() {
-    return 1; // no implementation yet
+    const users = await db('users');
+    return 1;
   }
 }

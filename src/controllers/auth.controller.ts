@@ -5,6 +5,7 @@ class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   register = async (req: Request, res: Response) => {
+    const user = await this.authService.register();
     res.json({ message: 'Success' });
   };
 }
