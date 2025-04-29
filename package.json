@@ -6,6 +6,9 @@
   "author": "Victor Nwagu",
   "license": "MIT",
   "scripts": {
+    "migrate": "ts-node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest --knexfile knexfile.ts",
+    "rollback": "ts-node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback --knexfile knexfile.ts",
+    "make:migration": "ts-node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:make",
     "build": "tsc",
     "compile": "tsc --watch",
     "start:dev": "nodemon ./dist/index.js",
