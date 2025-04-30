@@ -12,10 +12,10 @@ import { CreateUserDto, LoginUserDto } from '../interfaces';
 
 export class AuthService {
   async register(payload: CreateUserDto) {
-    const isBlacklisted = await isBlacklistedUser(payload.email);
-    if (isBlacklisted) {
-      throw new CustomError('User is blacklisted and cannot be onboarded', 403);
-    }
+    // const isBlacklisted = await isBlacklistedUser(payload.email);
+    // if (isBlacklisted) {
+    //   throw new CustomError('User is blacklisted and cannot be onboarded', 403);
+    // }
 
     const existing = await db('users').where({ email: payload.email }).first();
     if (existing) {
@@ -24,10 +24,21 @@ export class AuthService {
 
     try {
       const hashedPassword = await generateHash(payload.password);
-      const id = crypto.randomUUID();
-      await db('users').insert({ ...payload, id, password: hashedPassword });
+      const userId = crypto.randomUUID();
 
-      return { ...payload, id, password: undefined };
+      await db.transaction(async (trx) => {
+        await trx('users').insert({
+          ...payload,
+          id: userId,
+          password: hashedPassword,
+        });
+        await trx('wallets').insert({
+          user_id: userId,
+          id: crypto.randomUUID(),
+        });
+      });
+
+      return { ...payload, id: userId, password: undefined };
     } catch (err: any) {
       if (err.code === 'ER_DUP_ENTRY') {
         throw new CustomError('Email already exists', 400);
