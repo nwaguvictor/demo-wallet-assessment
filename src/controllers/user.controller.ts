@@ -10,11 +10,16 @@ class UserController {
   me = async (req: Request, res: Response) => {
     const user = (req as any).user;
     delete user.password;
-    res.status(200).json({ data: user });
+    res.status(200).json({ success: true, data: user });
   };
 
   fundWallet = async (req: Request, res: Response) => {
-    res.status(200).json({ message: 'fund' });
+    const user = (req as any).user;
+    const data = await this.walletService.fund({
+      ...req.body,
+      userId: user.id,
+    });
+    res.status(200).json({ success: true, data });
   };
 
   transferFromWallet = async (req: Request, res: Response) => {

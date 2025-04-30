@@ -10,6 +10,7 @@ const app: Application = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get('/ping', (_: Request, res: Response) => {
   res.json({ message: 'Server is up and running' });

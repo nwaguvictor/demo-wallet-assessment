@@ -5,3 +5,8 @@ export interface IWallet {
   created_at?: Date;
   updated_at?: Date;
 }
+
+export interface FundUserWalletDto {
+  userId: string;
+  amount: number;
+}
