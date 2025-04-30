@@ -1,6 +1,9 @@
 import { Router } from 'express';
 
-import { fundUserWalletSchema } from '../validators';
+import {
+  fundOrWithdrawUserWalletSchema,
+  transferFundSchema,
+} from '../validators';
 import { userController as ctr } from '../controllers';
 import { authenticate, validateBody } from '../middlewares';
 
@@ -9,10 +12,18 @@ const router = Router();
 router.get('/me', [authenticate, ctr.me]);
 router.post('/me/wallet/fund', [
   authenticate,
-  validateBody(fundUserWalletSchema),
+  validateBody(fundOrWithdrawUserWalletSchema),
   ctr.fundWallet,
 ]);
-router.post('/me/wallet/transfer', ctr.transferFromWallet);
-router.post('/me/wallet/withdraw', ctr.withdrawFromWallet);
+router.post('/me/wallet/transfer', [
+  authenticate,
+  validateBody(transferFundSchema),
+  ctr.transferFromWallet,
+]);
+router.post('/me/wallet/withdraw', [
+  authenticate,
+  validateBody(fundOrWithdrawUserWalletSchema),
+  ctr.withdrawFromWallet,
+]);
 
 export default router;

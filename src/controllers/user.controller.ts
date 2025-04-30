@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { UserService, WalletService } from '../services';
 
 class UserController {
@@ -8,26 +9,36 @@ class UserController {
   ) {}
 
   me = async (req: Request, res: Response) => {
-    const user = (req as any).user;
-    delete user.password;
+    const authUser = (req as any).user;
+    const user = await this.userService.profile(authUser.id);
     res.status(200).json({ success: true, data: user });
   };
 
   fundWallet = async (req: Request, res: Response) => {
-    const user = (req as any).user;
+    const authUser = (req as any).user;
     const data = await this.walletService.fund({
       ...req.body,
-      userId: user.id,
+      userId: authUser.id,
     });
     res.status(200).json({ success: true, data });
   };
 
   transferFromWallet = async (req: Request, res: Response) => {
-    res.status(200).json({ message: 'transfer' });
+    const authUser = (req as any).user;
+    const data = await this.walletService.transfer({
+      ...req.body,
+      userId: authUser.id,
+    });
+    res.status(200).json({ success: true, data });
   };
 
   withdrawFromWallet = async (req: Request, res: Response) => {
-    res.status(200).json({ message: 'withdraw' });
+    const authUser = (req as any).user;
+    const data = await this.walletService.withdraw({
+      ...req.body,
+      userId: authUser.id,
+    });
+    res.status(200).json({ success: true, data });
   };
 }
 

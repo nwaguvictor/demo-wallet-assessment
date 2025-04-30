@@ -6,7 +6,13 @@ export interface IWallet {
   updated_at?: Date;
 }
 
-export interface FundUserWalletDto {
+export interface FundOrWithdrawUserWalletDto {
   userId: string;
+  amount: number;
+}
+
+export interface TransferFundDto {
+  userId: string;
+  receiverId: string;
   amount: number;
 }
