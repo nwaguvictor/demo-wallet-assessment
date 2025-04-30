@@ -1,10 +1,15 @@
 import http from 'http';
+import bodyParser from 'body-parser';
 import express, { Application, NextFunction, Request, Response } from 'express';
 
 import { auths, users } from './routes';
+import { CustomError } from './utils';
 import { configs } from './config';
 
 const app: Application = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/ping', (_: Request, res: Response) => {
   res.json({ message: 'Server is up and running' });
@@ -13,11 +18,22 @@ app.get('/ping', (_: Request, res: Response) => {
 app.use('/api/v1/auths', auths);
 app.use('/api/v1/users', users);
 
-// app.all('*', (req: Request, res: Response, next: NextFunction) => {
-//   return next(
-//     new Error(`Not Found: can not make a ${req.method} to ${req.originalUrl}`),
-//   );
-// });
+app.all('/{*methods}', (req: Request, res: Response, next: NextFunction) => {
+  next(
+    new CustomError(
+      `Not Found: can not make a ${req.method} to ${req.originalUrl}`,
+      404,
+    ),
+  );
+});
+
+app.use((err: any, req: Request, res: Response, _: NextFunction) => {
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+  });
+});
 
 const server = http.createServer(app);
 

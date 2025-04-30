@@ -8,7 +8,9 @@ class UserController {
   ) {}
 
   me = async (req: Request, res: Response) => {
-    res.status(200).json({ message: 'me' });
+    const user = (req as any).user;
+    delete user.password;
+    res.status(200).json({ data: user });
   };
 
   fundWallet = async (req: Request, res: Response) => {

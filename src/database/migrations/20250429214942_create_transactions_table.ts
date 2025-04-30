@@ -2,7 +2,7 @@ import type { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('transactions', (table) => {
-    table.uuid('id').primary();
+    table.uuid('id').primary().notNullable();
     table.float('amount').notNullable();
     table.string('sender_wallet').notNullable();
     table.string('receiver_wallet').notNullable();
