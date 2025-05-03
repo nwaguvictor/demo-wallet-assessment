@@ -16,6 +16,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
     "@types/mock-knex": "^0.4.8",
@@ -29,7 +30,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@types/bcrypt": "^5.0.2",
     "axios": "^1.9.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
@@ -37,7 +37,6 @@
     "express": "^5.1.0",
     "joi": "^17.13.3",
     "knex": "^3.1.0",
-    "mysql": "^2.18.1",
     "mysql2": "^3.14.1"
   }
 }
