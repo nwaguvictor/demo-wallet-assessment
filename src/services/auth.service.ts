@@ -12,10 +12,10 @@ import { CreateUserDto, LoginUserDto } from '../interfaces';
 
 export class AuthService {
   async register(payload: CreateUserDto) {
-    // const isBlacklisted = await isBlacklistedUser(payload.email);
-    // if (isBlacklisted) {
-    //   throw new CustomError('User is blacklisted and cannot be onboarded', 403);
-    // }
+    const isBlacklisted = await isBlacklistedUser(payload.email);
+    if (isBlacklisted) {
+      throw new CustomError('User is blacklisted and cannot be onboarded', 403);
+    }
 
     const existing = await db('users').where({ email: payload.email }).first();
     if (existing) {
