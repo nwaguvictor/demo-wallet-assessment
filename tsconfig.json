@@ -8,9 +8,11 @@
     "outDir": "./dist",
     "strict": true,
     "baseUrl": "./",
+    "types": ["jest"],
     "paths": {
       "*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

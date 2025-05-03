@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import { db } from '../config';
 import { CustomError } from '../utils';
+import { IUser } from '../interfaces';
 
 export const authenticate = async (
   req: Request,
@@ -21,7 +22,7 @@ export const authenticate = async (
       return next(new CustomError('Invalid token format', 401));
     }
 
-    const user = await db('users').where({ id: userId }).first();
+    const user: IUser = await db('users').where({ id: userId }).first();
     if (!user) {
       return next(new CustomError('User not found', 401));
     }

@@ -75,10 +75,12 @@ export class WalletService {
         receiver_wallet: receiverWallet.id,
       });
 
-      return trx('wallets')
+      const updated = trx('wallets')
         .where({ id: senderWallet.id })
         .first()
         .select('id', 'user_id', 'balance');
+
+      return updated;
     });
   }
 

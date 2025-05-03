@@ -7,12 +7,12 @@ class AuthController {
 
   register = async (req: Request, res: Response) => {
     const user = await this.authService.register(req.body);
-    res.json({ success: true, data: user });
+    res.status(200).json({ success: true, data: user });
   };
 
   login = async (req: Request, res: Response) => {
     const data = await this.authService.login(req.body);
-    res.json({ success: true, data });
+    res.status(200).json({ success: true, data });
   };
 }
 
