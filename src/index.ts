@@ -1,5 +1,7 @@
 import http from 'http';
-import bodyParser from 'body-parser';
+import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
 import express, { Application, NextFunction, Request, Response } from 'express';
 
 import { auths, users } from './routes';
@@ -8,9 +10,11 @@ import { configs } from './config';
 
 const app: Application = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(cors());
+app.use(compression());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/ping', (_: Request, res: Response) => {
   res.json({ message: 'Server is up and running' });
@@ -37,7 +41,6 @@ app.use((err: any, req: Request, res: Response, _: NextFunction) => {
 });
 
 const server = http.createServer(app);
-
 server.listen(configs().PORT, async () => {
   console.log(`API running on port: ${configs().PORT}`);
 });
