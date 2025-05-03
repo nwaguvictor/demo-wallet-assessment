@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import { db } from '../config';
+import { db, configs } from '../config';
 import {
   compareHash,
   CustomError,
@@ -13,7 +13,7 @@ import { CreateUserDto, LoginUserDto } from '../interfaces';
 export class AuthService {
   async register(payload: CreateUserDto) {
     const isBlacklisted = await isBlacklistedUser(payload.email);
-    if (isBlacklisted) {
+    if (configs().ALLOW_BLACKLIST_CHECK && isBlacklisted) {
       throw new CustomError('User is blacklisted and cannot be onboarded', 403);
     }
 
