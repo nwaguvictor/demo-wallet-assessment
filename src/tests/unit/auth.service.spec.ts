@@ -15,6 +15,13 @@ jest.mock('../../utils', () => ({
   generateFauxToken: jest.fn(),
 }));
 
+jest.mock('../../config', () => ({
+  ...jest.requireActual('../../config'),
+  configs: () => ({
+    ALLOW_BLACKLIST_CHECK: true,
+  }),
+}));
+
 describe('AuthService', () => {
   const tracker = mockKnex.getTracker();
   const authService = new AuthService();
