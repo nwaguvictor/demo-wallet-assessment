@@ -28,7 +28,7 @@ export class WalletService {
         type: TransactionType.FUND,
         reference: crypto.randomUUID(),
         status: TransactionStatus.SUCCESS,
-        receiver_wallet: payload.userId,
+        receiver_wallet: wallet.id,
       });
 
       const updated = await trx('wallets')
