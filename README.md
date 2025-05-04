@@ -143,3 +143,11 @@ View it via [E-R Diagram](https://dbdiagram.io/d/6816b8681ca52373f55817a6)
 - TypeScript
 - KnexJs + MySQL
 - Jest (for testing)
+
+## Notes:
+
+Since we’re using a free hosting service and a free hosted database, there will be a cold start for these services when inactive for 15mins. This means that the first api call/request could take more than 30ms to get response.
+
+> [Hosted base url](https://victor-nwagu-lendsqr-be-test.onrender.com/api/v1)
+
+> [Health check url](https://victor-nwagu-lendsqr-be-test.onrender.com/ping)
